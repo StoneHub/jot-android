@@ -42,3 +42,16 @@ The native exit test clears the ViewModel during model initialization/generation
 Still requires Monroe: real microphone permission/input, names/noise/accent accuracy, fragment/number/negation cleanup evaluation, folded and unfolded visual acceptance, sustained warmth/battery use, and airplane-mode acceptance after setup. The phone was locked at the last visual check; installed and native inference proof does not establish visible UI acceptance.
 
 Deferred: floating bubble/keyboard integration, Accessibility insertion, wider device coverage, quantized speech JNI support, APK/runtime trimming and larger NPU cleanup candidates. No public/store release.
+
+## Standalone extraction — 2026-10-03
+
+The Android-only history was extracted to its own project. All 43 tracked app/build
+files match the source project byte for byte. A fresh source-only clone fetched
+and checksum-verified the pinned vendor runtime, then passed app/test APK builds,
+four unit tests and lint via `scripts/check.sh`. Its APK SHA256 matches the
+previously installed artifact above. No device reinstall was needed for this
+repository-only move. Migration documentation/workflow reviews found no defects.
+
+The manual GitHub workflow has been inspected locally but has not been run on a
+hosted runner. Public repository publication and the remote roadmap issue are
+pending explicit approval; the clone URL is the intended publication destination.
