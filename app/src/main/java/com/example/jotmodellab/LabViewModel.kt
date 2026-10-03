@@ -39,6 +39,7 @@ class LabViewModel(app: Application) : AndroidViewModel(app) {
     private var sample: FloatArray? = null
     private val recorder = SampleRecorder(app)
     private var cleaner: CleanupNpu? = null
+    @Volatile private var cleared = false
     init { refreshReady(); environment() }
     private fun update(change: (LabState) -> LabState) = mutable.update(change)
     fun refreshReady() { update { it.copy(ready = (ModelCatalog.speech + ModelCatalog.cleanup).filter(files::ready).map { m -> m.id }.toSet()) } }
@@ -51,7 +52,15 @@ class LabViewModel(app: Application) : AndroidViewModel(app) {
         viewModelScope.launch {
             try { action() } catch (e: CancellationException) { throw e }
             catch (e: Throwable) { update { it.copy(status = "Could not complete: ${e.message ?: e.javaClass.simpleName}") } }
-            finally { refreshReady(); environment(); update { it.copy(busy = false) } }
+            finally {
+                // Native generation can finish after coroutine cancellation; destroy it
+                // only after this operation has returned from the vendor runtime.
+                withContext(NonCancellable) {
+                    val dispose = if (cleared) cleaner.also { cleaner = null } else null
+                    refreshReady(); environment(); update { it.copy(busy = false) }
+                    if (dispose != null) withContext(Dispatchers.IO) { dispose.close() }
+                }
+            }
         }
     }
     fun prepare() = operation {
@@ -108,7 +117,9 @@ class LabViewModel(app: Application) : AndroidViewModel(app) {
         val source = state.value.cleanupInput
         check(files.ready(ModelCatalog.cleanup)) { "Prepare models first" }
         update { it.copy(status = "Running Qwen3 cleanup on HTP…") }
-        val result = withContext(Dispatchers.IO) {
+        // Vendor initialization/generation owns a native handle. Once started,
+        // let its bounded generation return before disposal on activity exit.
+        val result = withContext(NonCancellable + Dispatchers.IO) {
             val engine = cleaner ?: CleanupNpu(getApplication(), files.cleanup).also { cleaner = it }
             engine.clean(source)
         }
@@ -130,5 +141,9 @@ class LabViewModel(app: Application) : AndroidViewModel(app) {
         put("results", org.json.JSONArray().apply { state.value.results.forEach { r -> put(org.json.JSONObject().put("model", r.label).put("text", r.text).put("timings", r.details).put("hardware", r.evidence)) } })
         state.value.cleanupResult?.let { put("cleanup", org.json.JSONObject().put("source", state.value.cleanupInput).put("text", it.text).put("timings", it.details).put("hardware", it.evidence)) }
     }.toString(2)
-    override fun onCleared() { recorder.stop(); cleaner?.close(); super.onCleared() }
+    override fun onCleared() {
+        cleared = true; recorder.stop()
+        if (!state.value.busy) { cleaner?.close(); cleaner = null }
+        super.onCleared()
+    }
 }

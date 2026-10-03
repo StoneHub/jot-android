@@ -20,7 +20,7 @@ class ModelFiles(private val context: Context) {
     val root = File(context.filesDir, "models").apply { mkdirs() }
     val cleanup get() = File(root, "cleanup")
     fun speech(model: SpeechModel) = File(root, model.id)
-    fun ready(model: SpeechModel) = if (model.id == "cleanup") listOf("genie_config.json", "tokenizer.json", "part1_of_2.bin", "part2_of_2.bin").all { File(cleanup, it).isFile } else speech(model).let { File(it, "encoder.onnx").isFile && File(it, "decoder.onnx").isFile && File(it, "metadata.json").isFile && File(it, "encoder_qairt_context.bin").isFile && File(it, "decoder_qairt_context.bin").isFile }
+    fun ready(model: SpeechModel) = if (model.id == "cleanup") listOf("genie_config.json", "tokenizer.json", "tokenizer_config.json", "htp_backend_ext_config.json", "part1_of_2.bin", "part2_of_2.bin").all { File(cleanup, it).isFile } else speech(model).let { File(it, "encoder.onnx").isFile && File(it, "decoder.onnx").isFile && File(it, "metadata.json").isFile && File(it, "encoder_qairt_context.bin").isFile && File(it, "decoder_qairt_context.bin").isFile }
 
     fun download(model: SpeechModel, progress: (String) -> Unit) {
         if (ready(model)) return

@@ -76,7 +76,9 @@ class CleanupNpu(private val context: Context, private val directory: File) {
         }
         val text = output.toString().trim()
         return CleanupRun(text, loadMs, SystemClock.elapsedRealtime() - start, count,
-            "QAIRT runtime pinned to NPU; compiled QnnHtp model completed. Stop: $reason.", CleanupChecks.warning(source, text))
+            "QAIRT runtime pinned to NPU; compiled QnnHtp model completed. Stop: $reason.",
+            if (count >= 256 || reason.contains("limit", true) || reason.contains("max", true)) "Token limit reached; output may be incomplete. Keep the original."
+            else CleanupChecks.warning(source, text))
     }
     fun close() { wrapper?.close(); wrapper = null }
     companion object { private var registered = false }
