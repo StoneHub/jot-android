@@ -1,12 +1,32 @@
-# Jot Model Lab for Android
+# Jot Android
 
-A local experiment for Monroe's Galaxy Z Fold8 Ultra, verified by ADB as
-SM-F976U1 / SM8850. It compares speech recognition and cleanup before investing
-in a floating button, keyboard or Accessibility integration.
+A standalone Android project for local, hardware-accelerated dictation and text
+cleanup. The current app is **Jot Model Lab**: an evaluation harness before
+floating-button, keyboard or Accessibility integration.
+
+The initial compiled models target **SM8850 / Snapdragon 8 Elite Gen 5 for
+Galaxy**. Other chipsets are not yet supported by these bundles. See
+[device evidence and limitations](VALIDATION.md).
+
+## Clone and build
+
+```sh
+git clone https://github.com/StoneHub/jot-android.git
+cd jot-android
+python3 scripts/prepare-runtime.py
+# Configure ANDROID_HOME or sdk.dir in local.properties; use Java 21 and SDK 36.
+./scripts/check.sh
+```
+
+Open this directory directly in Android Studio. Build outputs, local SDK settings
+and downloaded weights are ignored. This project has its own history, issues and
+manual validation workflow. [Development and maintenance](docs/DEVELOPMENT.md)
+explains how to keep it current. The [Mac app](https://github.com/StoneHub/jot)
+is maintained separately.
 
 ## Try it
 
-1. Open **Jot Model Lab**. The initial test install has the three models seeded.
+1. Open **Jot Model Lab**. The initial development install has the three models seeded.
    Other installs use **Prepare models** once over Wi-Fi.
 2. Load the built-in example, or tap **Record**, grant microphone access, speak
    for up to 30 seconds and tap **Stop recording**.
@@ -89,6 +109,6 @@ verifies archives and atomically stages a flat allowlist of expected files.
 - [ONNX Runtime Qualcomm provider](https://github.com/onnxruntime/onnxruntime-qnn)
 - [Qualcomm GenieX Android example](https://github.com/qualcomm/ai-hub-apps/tree/release/geniex_chat_android)
 
-Runtime and model licenses apply independently. This is a personal installed
+Runtime and model licenses apply independently. This is an evaluation
 prototype; store distribution, cross-device support and final size optimization
 remain separate work.
