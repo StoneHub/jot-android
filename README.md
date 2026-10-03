@@ -21,7 +21,8 @@ python3 scripts/prepare-runtime.py
 Open this directory directly in Android Studio. Build outputs, local SDK settings
 and downloaded weights are ignored. This project has its own history, issues and
 manual validation workflow. [Development and maintenance](docs/DEVELOPMENT.md)
-explains how to keep it current. The [Mac app](https://github.com/StoneHub/jot)
+explains how to keep it current; [issue #1](https://github.com/StoneHub/jot-android/issues/1)
+tracks the next work. The [Mac app](https://github.com/StoneHub/jot)
 is maintained separately.
 
 ## Try it

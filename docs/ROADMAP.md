@@ -53,6 +53,5 @@ Implement this after model evaluation, not as part of routine maintenance.
 
 At each maintenance pass: verify the default branch/build, review coordinated
 vendor-runtime changes and security notices, inspect the open roadmap, and update
-its concrete next action. Keep hosted checks manual-only. When this repository is
-published, create a roadmap issue linking this document; that issue is the durable
-remote status record. No scheduled task is enabled without the maintainer's choice.
+its concrete next action. Keep hosted checks manual-only. Update [the roadmap issue](https://github.com/StoneHub/jot-android/issues/1)
+as the durable remote status record. No scheduled task is enabled without the maintainer's choice.

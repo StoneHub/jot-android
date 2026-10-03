@@ -23,8 +23,9 @@ runner or automatic paid build is configured.
 
 ## Keep it current
 
-[The roadmap](ROADMAP.md) defines the current work. Once published, the repository's
-open roadmap issue is the durable status and next-action record.
+[The roadmap](ROADMAP.md) defines the current work.
+[Issue #1](https://github.com/StoneHub/jot-android/issues/1) is the durable status
+and next-action record.
 After each evaluation or maintenance pass, update it with concrete findings and
 links to fixes. Start with build failures, privacy regressions and model/runtime
 compatibility; then dependency/security updates; then accepted product work.

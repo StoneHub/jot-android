@@ -53,5 +53,8 @@ previously installed artifact above. No device reinstall was needed for this
 repository-only move. Migration documentation/workflow reviews found no defects.
 
 The manual GitHub workflow has been inspected locally but has not been run on a
-hosted runner. Public repository publication and the remote roadmap issue are
-pending explicit approval; the clone URL is the intended publication destination.
+hosted runner. The standalone source is published at
+[StoneHub/jot-android](https://github.com/StoneHub/jot-android). The
+[roadmap issue](https://github.com/StoneHub/jot-android/issues/1) tracks follow-up
+work; public publication of the preserved history and synthetic evidence was
+explicitly approved. No public app release or recurring hosted check was enabled.
