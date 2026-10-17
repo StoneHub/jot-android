@@ -16,12 +16,6 @@ android {
         ndk { abiFilters += "arm64-v8a" }
     }
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -46,43 +40,24 @@ kotlin {
 }
 
 dependencies {
+  // GenieX AAR prepared by scripts/prepare-runtime.py; its QAIRT libraries come from qnn-runtime.
   implementation(files("../build/runtime/geniex-android-0.8.0.aar"))
-  implementation("com.microsoft.onnxruntime:onnxruntime-android:1.28.0")
-  implementation("com.qualcomm.qti:onnxruntime-android-qnn:2.6.0")
-  implementation("com.qualcomm.qti:qnn-runtime:2.50.0")
-  implementation("com.github.wendykierp:JTransforms:3.1")
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
-  val composeBom = platform(libs.androidx.compose.bom)
-  implementation(composeBom)
-  androidTestImplementation(composeBom)
+  implementation(libs.onnxruntime.android)
+  implementation(libs.onnxruntime.android.qnn)
+  implementation(libs.qnn.runtime)
+  implementation(libs.jtransforms)
+  implementation(libs.kotlinx.coroutines.android)
 
-  // Core Android dependencies
+  implementation(platform(libs.androidx.compose.bom))
   implementation(libs.androidx.core.ktx)
-  implementation(libs.androidx.lifecycle.runtime.ktx)
   implementation(libs.androidx.activity.compose)
-
-  // Arch Components
+  implementation(libs.androidx.lifecycle.runtime.ktx)
   implementation(libs.androidx.lifecycle.runtime.compose)
   implementation(libs.androidx.lifecycle.viewmodel.compose)
-
-  // Compose
   implementation(libs.androidx.compose.ui)
-  implementation(libs.androidx.compose.ui.tooling.preview)
   implementation(libs.androidx.compose.material3)
-  // Tooling
-  debugImplementation(libs.androidx.compose.ui.tooling)
-  // Instrumented tests
-  androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-  debugImplementation(libs.androidx.compose.ui.test.manifest)
 
-  // Local tests: jUnit, coroutines, Android runner
   testImplementation(libs.junit)
-  testImplementation(libs.kotlinx.coroutines.test)
-
-  // Instrumented tests: jUnit rules and runners
-  androidTestImplementation(libs.androidx.test.core)
-  androidTestImplementation(libs.androidx.test.ext.junit)
+  androidTestImplementation(libs.junit)
   androidTestImplementation(libs.androidx.test.runner)
-  androidTestImplementation(libs.androidx.test.espresso.core)
-
 }
