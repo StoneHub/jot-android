@@ -1,4 +1,4 @@
-package com.example.jotmodellab
+package space.jot.android
 
 import android.content.Context
 import android.os.SystemClock

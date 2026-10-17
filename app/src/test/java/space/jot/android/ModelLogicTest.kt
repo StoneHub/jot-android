@@ -1,4 +1,4 @@
-package com.example.jotmodellab
+package space.jot.android
 
 import org.junit.Assert.*
 import org.junit.Test

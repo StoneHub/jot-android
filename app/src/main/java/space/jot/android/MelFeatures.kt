@@ -1,4 +1,4 @@
-package com.example.jotmodellab
+package space.jot.android
 
 import org.jtransforms.fft.DoubleFFT_1D
 import kotlin.math.*

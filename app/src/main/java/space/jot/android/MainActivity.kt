@@ -1,4 +1,4 @@
-package com.example.jotmodellab
+package space.jot.android
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -18,7 +18,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.jotmodellab.theme.JotModelLabTheme
+import space.jot.android.theme.JotModelLabTheme
 
 class MainActivity : ComponentActivity() {
     private val lab: LabViewModel by viewModels()

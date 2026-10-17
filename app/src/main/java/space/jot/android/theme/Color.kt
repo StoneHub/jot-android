@@ -1,4 +1,4 @@
-package com.example.jotmodellab.theme
+package space.jot.android.theme
 
 import androidx.compose.ui.graphics.Color
 

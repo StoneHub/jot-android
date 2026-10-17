@@ -1,4 +1,4 @@
-package com.example.jotmodellab
+package space.jot.android
 
 import ai.onnxruntime.*
 import android.content.Context
