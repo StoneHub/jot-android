@@ -90,7 +90,7 @@ After setup on the target phone:
 ```sh
 adb -s "$JOT_ANDROID_SERIAL" install -r app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
 adb -s "$JOT_ANDROID_SERIAL" shell am instrument -w \
-  -e class com.example.jotmodellab.HardwareSmokeTest \
+  -e class space.jot.android.HardwareSmokeTest \
   com.monroestone.jotmodellab.test/androidx.test.runner.AndroidJUnitRunner
 ```
 

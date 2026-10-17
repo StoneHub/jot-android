@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.jotmodellab"
+    namespace = "space.jot.android"
     compileSdk = 36
     defaultConfig {
         applicationId = "com.monroestone.jotmodellab"

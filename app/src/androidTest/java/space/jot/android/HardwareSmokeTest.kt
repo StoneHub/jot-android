@@ -1,4 +1,4 @@
-package com.example.jotmodellab
+package space.jot.android
 
 import androidx.test.platform.app.InstrumentationRegistry
 import kotlinx.coroutines.runBlocking

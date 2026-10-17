@@ -1,4 +1,4 @@
-package com.example.jotmodellab
+package space.jot.android
 
 import android.app.Application
 import android.os.*

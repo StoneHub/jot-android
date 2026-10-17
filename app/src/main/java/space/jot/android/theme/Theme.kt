@@ -1,4 +1,4 @@
-package com.example.jotmodellab.theme
+package space.jot.android.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
