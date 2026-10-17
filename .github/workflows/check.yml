@@ -14,6 +14,6 @@ jobs:
           distribution: temurin
           java-version: '21'
       - name: Install compile SDK
-        run: sdkmanager "platforms;android-36" "build-tools;36.0.0"
+        run: ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager "platforms;android-36" "build-tools;36.0.0"
       - name: Build, unit tests and lint
         run: ./scripts/check.sh
