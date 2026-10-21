@@ -10,19 +10,6 @@ import java.io.File
 
 data class CleanupRun(val text: String, val loadMs: Long, val inferenceMs: Long, val tokens: Long, val evidence: String, val warning: String?)
 
-object CleanupChecks {
-    fun warning(source: String, candidate: String): String? {
-        if (candidate.isBlank()) return "Empty output; keep the original."
-        if (candidate.contains("<think>") || candidate.contains("<|")) return "Model returned control text; keep the original."
-        val numbers = Regex("\\d+(?:[.,]\\d+)*")
-        if (numbers.findAll(source).map { it.value }.toList() != numbers.findAll(candidate).map { it.value }.toList()) return "Numbers changed; keep the original."
-        val negations = Regex("\\b(?:not|never|no|cannot|can't|don't|won't|isn't|wasn't|shouldn't)\\b", RegexOption.IGNORE_CASE)
-        if (negations.findAll(source).count() != negations.findAll(candidate).count()) return "Negation changed; keep the original."
-        if (candidate.length > maxOf(80, source.length * 2)) return "Output expanded substantially; review before using."
-        return null
-    }
-}
-
 class CleanupNpu(private val context: Context, private val directory: File) {
     private var wrapper: LlmWrapper? = null
     suspend fun clean(source: String): CleanupRun {

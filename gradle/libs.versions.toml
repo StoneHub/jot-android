@@ -9,6 +9,7 @@ coroutines = "1.10.2"
 jtransforms = "3.1"
 junit = "4.13.2"
 kotlin = "2.3.20"
+kotlinxSerialization = "1.11.0"
 onnxruntime = "1.28.0"
 onnxruntimeQnn = "2.6.0"
 qnnRuntime = "2.50.0"
@@ -25,6 +26,7 @@ androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtim
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidxTestRunner" }
 junit = { module = "junit:junit", version.ref = "junit" }
 jtransforms = { module = "com.github.wendykierp:JTransforms", version.ref = "jtransforms" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 onnxruntime-android = { module = "com.microsoft.onnxruntime:onnxruntime-android", version.ref = "onnxruntime" }
 onnxruntime-android-qnn = { module = "com.qualcomm.qti:onnxruntime-android-qnn", version.ref = "onnxruntimeQnn" }
