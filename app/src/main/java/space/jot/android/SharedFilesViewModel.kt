@@ -11,12 +11,13 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import space.jot.android.contract.ContractFileException
+import space.jot.android.contract.SessionFile
 import space.jot.android.contract.VocabularyEntry
 import space.jot.android.contract.VocabularyFile
 import space.jot.android.contract.VocabularyStore
 import java.io.File
 
-data class SharedFilesState(val vocabulary: List<VocabularyEntry> = emptyList(), val status: String = "")
+data class SharedFilesState(val vocabulary: List<VocabularyEntry> = emptyList(), val session: SessionFile.Contents? = null, val status: String = "")
 
 /** Files shared with Jot for Mac (docs/SHARED-CONTRACT.md in StoneHub/jot). Nothing here leaves the phone. */
 class SharedFilesViewModel(app: Application) : AndroidViewModel(app) {
@@ -32,6 +33,12 @@ class SharedFilesViewModel(app: Application) : AndroidViewModel(app) {
         val result = vocabulary.import(read(uri, VocabularyFile.MAX_BYTES))
         val entries = vocabulary.load().entries
         mutable.update { it.copy(vocabulary = entries, status = "Added ${result.added.size} vocabulary entries; skipped ${result.skipped} phrases already in the list.") }
+    }
+
+    /** Shows a session file; it is read into memory only and not kept. */
+    fun openSession(uri: Uri) = inBackground {
+        val session = SessionFile.decode(read(uri, SessionFile.MAX_BYTES))
+        mutable.update { it.copy(session = session, status = "Opened a session with ${session.rows.size} rows. It is not saved on this phone.") }
     }
 
     private fun inBackground(action: () -> Unit) {
