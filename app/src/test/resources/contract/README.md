@@ -7,3 +7,4 @@ change the Mac repository first, then copy the file again and update the commit 
 | File | Copied from StoneHub/jot commit |
 | --- | --- |
 | `cleanup-checks-v1.json` | `696c28a` |
+| `vocabulary-v1.json` | `696c28a` |
