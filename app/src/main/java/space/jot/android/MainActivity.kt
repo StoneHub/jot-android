@@ -22,6 +22,7 @@ import space.jot.android.theme.JotModelLabTheme
 
 class MainActivity : ComponentActivity() {
     private val lab: LabViewModel by viewModels()
+    private val shared: SharedFilesViewModel by viewModels()
     private val mic = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
         if (granted) lab.record()
         else android.widget.Toast.makeText(this, "Microphone permission is needed only to record your sample.", android.widget.Toast.LENGTH_LONG).show()
@@ -29,20 +30,22 @@ class MainActivity : ComponentActivity() {
     private val export = registerForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
         uri?.let { contentResolver.openOutputStream(it)?.bufferedWriter()?.use { writer -> writer.write(lab.report()) } }
     }
+    private val openVocabulary = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri -> uri?.let(shared::importVocabulary) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState); enableEdgeToEdge()
         setContent {
             JotModelLabTheme {
                 val state by lab.state.collectAsStateWithLifecycle()
+                val files by shared.state.collectAsStateWithLifecycle()
                 Surface(Modifier.fillMaxSize()) {
                     BoxWithConstraints(Modifier.safeDrawingPadding()) {
                         if (maxWidth >= 700.dp) {
                             Row(Modifier.fillMaxSize().padding(20.dp), horizontalArrangement = Arrangement.spacedBy(24.dp)) {
-                                Column(Modifier.weight(1f).verticalScroll(rememberScrollState())) { Controls(state) }
+                                Column(Modifier.weight(1f).verticalScroll(rememberScrollState())) { Controls(state); Shared(files) }
                                 Column(Modifier.weight(1f).verticalScroll(rememberScrollState())) { Results(state) }
                             }
                         } else {
-                            Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) { Controls(state); Results(state) }
+                            Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) { Controls(state); Results(state); Shared(files) }
                         }
                     }
                 }
@@ -95,6 +98,10 @@ class MainActivity : ComponentActivity() {
             OutlinedTextField(state.cleanupInput, lab::editCleanup, label = { Text("Original dictation") }, minLines = 3, modifier = Modifier.fillMaxWidth(), enabled = !state.busy && !state.recording)
             Button(lab::cleanup, enabled = !state.busy && !state.recording && state.cleanupInput.isNotBlank() && "cleanup" in state.ready) { Text("Clean up with Qwen3 · NPU") }
         }
+    }
+    @Composable private fun Shared(files: SharedFilesState) {
+        HorizontalDivider(Modifier.padding(vertical = 12.dp))
+        SharedFilesSection(files, importVocabulary = { openVocabulary.launch(arrayOf("application/json", "text/plain", "application/octet-stream")) })
     }
     @Composable private fun Results(state: LabState) {
         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {

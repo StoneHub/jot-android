@@ -47,6 +47,7 @@ dependencies {
   implementation(libs.qnn.runtime)
   implementation(libs.jtransforms)
   implementation(libs.kotlinx.coroutines.android)
+  implementation(libs.kotlinx.serialization.json)
 
   implementation(platform(libs.androidx.compose.bom))
   implementation(libs.androidx.core.ktx)
@@ -58,7 +59,6 @@ dependencies {
   implementation(libs.androidx.compose.material3)
 
   testImplementation(libs.junit)
-  testImplementation(libs.kotlinx.serialization.json)
   androidTestImplementation(libs.junit)
   androidTestImplementation(libs.androidx.test.runner)
 }
