@@ -58,6 +58,7 @@ dependencies {
   implementation(libs.androidx.compose.material3)
 
   testImplementation(libs.junit)
+  testImplementation(libs.kotlinx.serialization.json)
   androidTestImplementation(libs.junit)
   androidTestImplementation(libs.androidx.test.runner)
 }

@@ -10,8 +10,12 @@ Source identity and APK hash were preserved by the repository extraction.
 Problem: the current small model may retain fillers, change capitalization or
 remove meaning; a previous prompt dropped a negation.
 
-Next action: build a synthetic corpus covering fillers, names, numbers, negations,
-URLs and fragments. Compare prompt/runtime behavior and any stronger model only
+The safety checks now follow the cleanup rules shared with Jot for Mac
+(`docs/SHARED-CONTRACT.md` in StoneHub/jot), and `CleanupContractTest` runs the
+shared synthetic corpus from `app/src/test/resources/contract/`.
+
+Next action: extend that corpus with names, URLs and fragments (a new case goes
+into the Mac repository first). Compare prompt/runtime behavior and any stronger model only
 after verifying a compatible compiled NPU bundle and its licensing.
 
 Acceptance: original/candidate comparison remains visible; limits/corruption are

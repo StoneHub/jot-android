@@ -11,11 +11,6 @@ class ModelLogicTest {
         assertEquals("Word error rate: 50.0%", WordScore.errorRate("blue folder", "red folder"))
         assertEquals("Word error rate: 50.0%", WordScore.errorRate("blue folder", "the blue folder"))
     }
-    @Test fun cleanupFlagsNumberAndNegationChanges() {
-        assertNotNull(CleanupChecks.warning("Do not send 42", "Send 42"))
-        assertNotNull(CleanupChecks.warning("Send 42", "Send 24"))
-        assertNull(CleanupChecks.warning("um send 42 tomorrow", "Send 42 tomorrow."))
-    }
     @Test fun melSilenceAndToneHaveWhisperShape() {
         val silence = MelFeatures.extract(FloatArray(16000))
         assertEquals(240000, silence.size)
