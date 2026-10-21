@@ -31,6 +31,7 @@ class MainActivity : ComponentActivity() {
         uri?.let { contentResolver.openOutputStream(it)?.bufferedWriter()?.use { writer -> writer.write(lab.report()) } }
     }
     private val openVocabulary = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri -> uri?.let(shared::importVocabulary) }
+    private val openSession = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri -> uri?.let(shared::openSession) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState); enableEdgeToEdge()
         setContent {
@@ -101,8 +102,10 @@ class MainActivity : ComponentActivity() {
     }
     @Composable private fun Shared(files: SharedFilesState) {
         HorizontalDivider(Modifier.padding(vertical = 12.dp))
-        SharedFilesSection(files, importVocabulary = { openVocabulary.launch(arrayOf("application/json", "text/plain", "application/octet-stream")) })
+        SharedFilesSection(files, importVocabulary = { openVocabulary.launch(jsonTypes) }, openSession = { openSession.launch(jsonTypes) })
     }
+    // Files moved from a Mac often arrive without a JSON type; the readers refuse anything that is not theirs.
+    private val jsonTypes = arrayOf("application/json", "text/plain", "application/octet-stream")
     @Composable private fun Results(state: LabState) {
         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Text("Results", style = MaterialTheme.typography.headlineSmall)
