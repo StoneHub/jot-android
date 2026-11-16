@@ -1,3 +1,7 @@
+# Jot Android
+
+Read [AGENTS.md](AGENTS.md) for project agreements, including how to ship: merge fixes and features once `scripts/check.sh` passes, and say plainly what could not run. Read [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) before changing models, build tooling or releases.
+
 ## Review and shipping skills
 
 - "full send" or "yolo": the `full-send` skill. "full stop": the `full-stop` skill. "council": the `council` skill. "full send with council" uses the council instead of the single Opus review loop.
